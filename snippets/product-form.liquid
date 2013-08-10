@@ -1,0 +1,33 @@
+{% if product.available %}    
+    <form action="/cart/add" method="post">
+        {% if product.variants.size > 0 %}      
+            {% if product.available and product.variants.size > 0 %}
+            <div id="swatches">{% include 'swatches' %}</div>
+            {% endif %}       
+        <div id="product-variants">        
+              <select id="product-select" name='id'>
+                {% for variant in product.variants %}
+                  <option value="{{ variant.id }}">{{ variant.title }}></option>
+                {% endfor %}
+              </select>
+        </div>   
+            {% else %}  
+        <div class="what-is-it">
+            {% if product.options.first != 'Title' %}
+            <label>{{ product.options.first }}:</label>{% for variant in product.variants %}<span class="it-is">{{ variant.option1 | escape }}</span>{% endfor %}
+            {% endif %}
+        </div>
+        
+        <div id="product-variants"></div><!-- product variants -->  
+            <input  type="hidden" id="{{ variant.id }}" name="id" value="{{ product.variants[0].id }}" />
+
+        {% endif %}
+      <div class="sorry">
+      <input type="submit" name="button" id="add" class="button" value="BUY ME :)" />      
+      </div>
+      </form>
+  {% else %}
+  <div class="sorry">
+    <input type="submit" name="button" id="add" class="button" value="BE BACK LATER :(" />      
+  </div>
+{% endif %}

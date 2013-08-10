@@ -1,0 +1,343 @@
+<div id="richsnippet" style="display:none;visibility:hidden;">
+  <div itemscope itemtype="http://schema.org/Product">
+    <span itemprop="brand">{{ product.vendor }}</span>
+    <span itemprop="name">{{ product.title | escape }}</span>
+    <img itemprop="image" src="{{ product.images[0] | product_img_url: "large" }}" />
+    <span itemprop="description">{{ product.description }}</span>
+    Category: <span itemprop="category" content="{{ product.type }}">{{ product.type }}</span>
+    Product #: <span itemprop="identifier" content="sku:{{ product.variants[0].sku }}">{{ product.variants[0].sku }}</span>
+    <div itemprop="offerDetails" itemscope itemtype="http://schema.org/Offer">
+      Regular price: {{ product.price | money }}
+      <meta itemprop="currency" content="{{ shop.currency }}" />
+      <div itemprop="price">{{ product.price | money }}</div>
+      Available from: <span itemprop="seller">{{ shop.url }}</span>
+      {% if product.available == 'true' %}
+      <link itemprop="availability" href="http://schema.org/InStock" />
+      {% endif %}
+      </div>
+    </div>
+</div><!-- end richsnippet -->
+
+
+
+<!-- For Desktop -->
+<div class="row">  
+  <div id="three-banners">
+	<a href="{{ settings.threeleftlink }}"><img src="{{ 'lefthree.gif' | asset_url }}" alt="{{ settings.three1_alt }}" style="border: 0;"  /></a>
+   <a href="{{ settings.threecenterlink }}"><img src="{{ 'centerthree.gif' | asset_url }}" alt="{{ settings.three2_alt }}" style="border: 0;"  /></a>
+   <a href="{{ settings.threerightlink }}"><img src="{{ 'rightthree.gif' | asset_url }}" alt="{{ settings.three3_alt }}" style="border: 0;"/></a>
+  </div>
+</div>
+
+
+{% include 'breadcrumb' %}
+
+
+
+<div class="content">
+  
+  <div id="product-photos" class="seven columns">
+    <div id="product-photo-container" class="nine columns">
+       {% if product.metafields.onsale.enabled %}
+        <div class="spurit-onsale-main" 
+            style="{{ product.metafields.onsale.styled }} background: url({{ product.metafields.onsale.imaged | asset_url }})">
+            <div class="spurit-onsale-text" style="{{ product.metafields.onsale.styletextd }}">
+                {{ product.metafields.onsale.textd }}
+            </div>
+        </div>
+  {% endif %}
+      {% for image in product.images %}
+      <a class="gallery" href="{{ image.src | product_img_url: '1024x1024' }}" rel="gallery">
+        <img src="{{ image.src | product_img_url: 'grande' }}" alt="{{ image.alt | escape }}"/>
+      </a>
+      {% endfor %}
+    </div><!-- #product-photo-container -->
+
+    {% if product.images.size > 1 %}
+    <ul id="product-photo-thumbs" class="three columns">
+      {% for image in product.images %}
+      <li class="product-photo-thumb">
+        
+        <img src="{{ image.src | product_img_url: 'grande' }}" alt="{{ image.alt | escape }}"/>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+
+</div>
+
+<div class="related-products">
+  <h3 style="color:#ec008c;">OTHER AWESOME STUFF!</h3>
+<div recomatic="product" shop="{{shop.permanent_domain}}" product_id="{{product.id}}">
+</div>
+</div>
+  
+<script>
+   loadImages('.product-photo-thumb img');
+   jQuery('#product-photos a').colorbox({
+       rel: 'gallery',
+       transition: 'fade'
+   });
+   var product_container = $('#product-photo-container');
+
+   // Initialize first photo
+   product_container.find('img:first').imagesLoaded(function () {
+       var elem = $(this);
+       elem.addClass('active').fadeIn(200);
+       product_container.css('height', elem.height());
+       elem.parent().css({
+           'height': elem.height(),
+               'width': elem.width()
+       });
+   });
+
+   // Display new photo
+   $('.product-photo-thumb').click(function () {
+
+       var active_index = $(this).index();
+       var photo_to_show = product_container.find('img').eq(active_index);
+       var photo_to_hide = product_container.find('.active');
+
+       photo_to_hide.fadeOut(100, function () {
+           photo_to_hide.removeClass('active');
+           photo_to_hide.parent().css({
+               'height': 0,
+                   'width': 0
+           });
+           var photo_to_show = product_container.find('img').eq(active_index);
+           photo_to_show.imagesLoaded(function () {
+               product_container.animate({
+                   height: photo_to_show.height()
+               }, 200, function () {
+                   photo_to_show.fadeIn(100, function () {
+                       $(this).addClass('active');
+                       $(this).parent().css({
+                           'height': $(this).height(),
+                            'width': $(this).width()
+                       });
+                   });
+               });
+           });
+       });
+   });
+</script>
+
+<div id="product-description" class="five columns">  
+	<h1>{{ product.title | escape }}  
+        <p id="product-price">
+          {% if product.compare_at_price > product.price %}
+          <span class="product-price" itemprop="price">{{ product.price | money }}</span>&nbsp;<span class="was">{{ product.compare_at_price_max | money }}</span>
+          {% else %}
+          <span class="product-price" itemprop="price">{{ product.price | money }}</span>
+          {% endif %}
+        </p>  
+    </h1>  
+  <div class="yotpo bottomLine"
+data-appkey="MP1uq2kMfBlUo0mke9IeMsvzb9gQqpr4UDu7qYvJ"
+data-domain="{{ shop.permanent_domain | escape }}"
+data-product-id="{{ product.id }}"
+data-product-models="{{ product.id }}"
+data-name="{{ product.title | escape }}"
+data-url="{{ page.url }}"
+data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}"
+data-description="{{ product.description | escape }}"
+data-bread-crumbs="{% for tag in product.tags %}{{ tag | escape }};{% endfor %}">
+</div>
+  <br>
+		
+  {% include 'product-form' %}<br>
+  
+  <div id="productbtn">
+    <img src="{{ 'product_page_button.png' | asset_url }} "/><br>
+  </div>
+  
+  <div class="desc">
+        
+        {% if settings.more-info == 'accordion' %}
+        <ul class="accordion" style="margin-top: -21px;">
+          <li class="active">
+            <div class="title">
+              <h5>Details</h5>
+            </div>
+            <div class="content">
+              
+                 {{ product.description }} 
+             
+            </div>
+          </li>        
+        {% unless settings.tab1 == blank %}
+          <li>
+            <div class="title">
+              <h5>{{ settings.tab1_title }}</h5>
+            </div>
+            <div class="content">
+                <p>{{ settings.tab1 }}</p>    
+            </div>
+          </li>
+        {% endunless %}
+        {% unless settings.tab2 == blank %}
+          <li>
+            <div class="title">
+              <h5>{{ settings.tab2_title }}</h5>
+            </div>
+            <div class="content">
+            <p>{{ settings.tab1 }}</p>
+           </div>
+          </li>
+        {% endunless %}
+        {% unless settings.tab3 == blank %}
+          <li>
+            <div class="title">
+              <h5>{{ settings.tab3_title }}</h5>
+            </div>
+            <div class="content">
+            <p>{{ settings.tab3 }}</p>
+           </div>
+          </li>
+        {% endunless %}
+        </ul>
+        
+        
+        {% elsif settings.more-info == 'tabs' %}
+        <dl class="tabs four-up">
+            <dd class="active"><a href="#simple1">Details</a></dd>
+            <dd><a href="#simple2">{{ settings.tab1_title }}</a></dd>
+            <dd><a href="#simple3">{{ settings.tab2_title }}</a></dd>
+            <dd class="hide-for-small"><a href="#simple4">{{ settings.tab3_title }}</a></dd>
+        </dl>
+        <ul class="tabs-content">
+            <li class="active" id="simple1Tab">{{ product.description }}</li>
+            <li id="simple2Tab"><p>{{ settings.tab1 }}</p></li>
+            <li id="simple3Tab"><p>{{ settings.tab2 }}</p></li>
+            <li id="simple4Tab"><p>{{ settings.tab3 }}</p></li>
+        </ul>
+        <script type="text/javascript">$(document).foundationTabs();</script>
+        {% else %}
+        <div id="desc">
+        <p>{{ product.description }}</p>
+    </div> 
+        {% endif %}
+</div>
+  
+</div>
+
+<div class="row">
+  <div class="yotpo reviews"
+data-appkey="MP1uq2kMfBlUo0mke9IeMsvzb9gQqpr4UDu7qYvJ"
+data-domain="{{ shop.permanent_domain | escape }}"
+data-product-id="{{ product.id }}"
+data-product-models="{{ product.id }}"
+data-name="{{ product.title | escape }}"
+data-url="{{ page.url }}"
+data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}"
+data-description="{{ product.description | escape }}"
+data-bread-crumbs="{% for tag in product.tags %}{{ tag | escape }};{% endfor %}">
+</div>
+                 
+</div>
+<div class="row">
+  {% include 'related-products' %}
+</div>
+
+
+
+        
+
+<script>
+jQuery(function() {
+
+  // OPTION SELECT
+  {% if product.available and product.variants.size > 0 %}
+  
+  {% assign look_for_image_match = true %}
+  {% assign option_index = 0 %}
+  {% for option in product.options %}
+    {% assign downcased_option = option | downcase %}
+    {% if downcased_option contains 'color' or downcased_option contains 'colour' or downcased_option contains 'style' %}
+      {% assign look_for_image_match = true %}
+      {% assign option_index = forloop.index0 %}
+    {% endif %}
+  {% endfor %} 
+  Shopify.doNotTriggerClickOnThumb = false;
+
+  var selectCallback = function(variant, selector) {
+
+    if (variant && variant.available) {
+      // selected a valid variant that is available.
+      jQuery('#add').removeClass('disabled').removeAttr('disabled').val('Buy Me :)').fadeTo(200,1); // remove unavailable class from add-to-cart button, and re-enable button
+      
+      if ( variant.compare_at_price > variant.price ) {
+        jQuery('#product-price').html('<span class="money">'+ Shopify.formatMoney(variant.price, "{{ shop.money_format }}") +'</span>'+'&nbsp;<span class="was">'+Shopify.formatMoney(variant.compare_at_price, "{{ shop.money_format }}")+ '</span>');  // update price field
+      } else {
+        jQuery('#product-price').html('<span class="money">'+ Shopify.formatMoney(variant.price, "{{ shop.money_format }}") + '</span>' );  // update price field
+      }
+      
+
+    } else {
+      // variant doesn't exist or is sold out
+      var message = variant ? "BE BACK SOON :(" : "Unavailable";  
+      jQuery('#add').val(message).addClass('disabled').attr('disabled', 'disabled').fadeTo(200,0.5);      // set add-to-cart button to unavailable class and disable button 
+    }
+
+  };
+
+  new Shopify.OptionSelectors("product-select", { product: {{ product | json }}, onVariantSelected: selectCallback });
+  
+
+ {% assign found_one_in_stock = false %}
+{% for variant in product.variants %}
+  {% if variant.available and found_one_in_stock == false %}
+    {% assign found_one_in_stock = true %}
+    {% for option in product.options %}
+    jQuery('.single-option-selector:eq({{ forloop.index0 }})').val({{ variant.options[forloop.index0] | json }}).trigger('change');
+   
+
+    // BEGIN SWATCHES
+    jQuery('.swatch li').filter(function() { return jQuery(this).attr('data-option-title') === {{ variant.options[forloop.index0] | json }} }).addClass('selected');
+    // END SWATCHES
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+  
+    // BEGIN SWATCHES
+    jQuery('.swatch li').click(function() {
+      var optionValue = jQuery(this).attr('data-option-title'); // what have I just clicked on?
+      jQuery(this).parents('.swatch').find('li').removeClass('selected'); // un-select all the buttons
+      jQuery(this).addClass('selected'); // select the current one
+      jQuery('.single-option-selector:contains(' + optionValue + ')').val(optionValue).trigger('change');
+      return false;
+    });
+    // END SWATCHES
+  
+  {% if look_for_image_match %}
+  // If a Color is selected, show the matching product image.
+  jQuery('.single-option-selector:eq({{ option_index }})').bind('change', function() {
+    if (!Shopify.doNotTriggerClickOnThumb) {
+      jQuery('#product-photo-thumbs img[alt="' + jQuery(this).val() + '"]:eq(0)').trigger('click');      
+    }
+    Shopify.doNotTriggerClickOnThumb = false;
+    return true;
+  });  
+  // If an image is shown in Main View, auto-select the corresponding Color option.
+  jQuery('#product-photo-thumbs img').bind('click', function() {
+   var color = jQuery(this).attr('alt');
+   if (color && color !== '') {
+     var options = jQuery('.single-option-selector:eq({{ option_index }}) option[value="' + color + '"]');
+     if (options.size() !== 0) {
+       Shopify.doNotTriggerClickOnThumb = true;
+       jQuery('.single-option-selector:eq({{ option_index }})').val(color).trigger('change');
+     }
+   }
+   return true;
+  });
+  {% endif %}
+  
+  {% endif %}
+
+ {% if product.variants.size > 0 %}
+
+ {% endif %} 
+});
+$(document).foundationButtons();
+</script>

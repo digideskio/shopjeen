@@ -1,0 +1,23 @@
+<script type="text/javascript">
+
+$(document).ready(function() {  
+var stickyNavTop = $('.nav-bar').offset().top;  
+  
+var stickyNav = function(){  
+var scrollTop = $(window).scrollTop();  
+       
+if (scrollTop > stickyNavTop) {   
+    $('.nav-bar').addClass('sticky');  
+} else {  
+    $('.nav-bar').removeClass('sticky');   
+}  
+};  
+  
+stickyNav();  
+  
+$(window).scroll(function() {  
+    stickyNav();  
+});  
+});  
+  
+</script>  

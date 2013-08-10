@@ -1,0 +1,13 @@
+<div id="page" class="row">
+  
+  <div class="span12 details">
+    <h1>SHOP BY CATEGORY</h1>
+   <div class="widenav">
+    {% for link in linklists.apparel.links %}
+   <li>{{ link.title | link_to: link.url }}</li>
+{% endfor %}
+    </div> 
+    {{ page.content }}
+  </div>
+  
+</div>

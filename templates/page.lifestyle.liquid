@@ -1,0 +1,9 @@
+<div id="page">
+<h2>{{ page.title }}</h2>
+<div class="widenav">
+    {% for link in linklists.lifestyle-1.links %}
+   <li>{{ link.title | link_to: link.url }}</li>
+{% endfor %}
+    </div> 
+  {{ page.content }}
+</div>

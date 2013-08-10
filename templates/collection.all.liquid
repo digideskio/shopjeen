@@ -1,0 +1,142 @@
+<div id="collectionpage">
+{% paginate collection.products by 32 %}
+
+<div id="collection-left" class="two columns">
+    <h4>{{ settings.collections }}</h4>
+    
+  <select></select>    
+  
+ <script>
+     $(function() {
+      $("<select />").appendTo("#collection-left");
+      $("<option />", {
+         "selected": "selected",
+         "value"   : "",
+         "text"    : "Go to..."
+      }).appendTo("#collection-left select");
+      $("#collection-left a").each(function() {
+       var el = $(this);
+       $("<option />", {
+           "value"   : el.attr("href"),
+           "text"    : el.text()
+       }).appendTo("#collection-left select");
+      });
+      $("#collection-left select").change(function() {
+        window.location = $(this).find("option:selected").val();
+      });
+	 });
+	</script>
+    
+    <ul id="linklists" class="no-bullet">
+        {% for link in linklists.[settings.collection-list].links %}
+        <li>{{ link.title | link_to: link.url }}</li>
+        {% endfor %}
+    </ul>
+
+{% if settings.show-designers %}
+    <h4 class="designer">{{ settings.designers }}</h4>
+    {% if collection.handle == "all" %}
+        <ul id="designer-linklists" class="no-bullet">
+               {% for product_vendor in shop.vendors %}
+               <li>{{ product_vendor | link_to_vendor  }}</li>
+               {% endfor %}
+        </ul> 
+    {% else %}
+        <ul id="linklists" class="no-bullet">
+            {% for product_vendor in collection.all_vendors %}
+                <li class="{{ product_vendor | handelize }}">
+                {{ product_vendor | link_to_vendor }}
+                </li>
+            {% endfor %}
+        </ul> 
+    {% endif %}    
+{% endif %}
+</div>
+
+
+
+    <div class="collection-description ten columns">
+        <h1>{{ collection.title }}</h1>
+            {{ collection.description }}
+
+            
+            <div id="paginate-bar">
+                <span class="left">
+                    <div id="sorting-hat">
+                     {% include 'sort' %}
+                    </div>
+                </span>
+                <span class="right">
+                    {% if collection.products_count > 32 %}
+                        <a href="/collections/{{ collection.handle }}" style="margin-right: 10px">View Less</a>
+                    {% endif %}   
+                </span>
+            </div>
+            
+    
+        <div class="clear"></div>
+    
+        <ul id="collectionlist" style="margin-top: 20px;" class="block-grid {{ settings.collection-per-row }}-up mobile one-up">  
+            {% for product in collection.products %}
+            <li id="product-{{ forloop.index | plus:paginate.current_offset }}" class="product" data-alpha="{{product.title}}" data-price="{{product.price}}">     
+                <div class="collection-image">
+                {% if product.price < product.compare_at_price %}<div class="sale"></div>{% endif %}
+                    <a href="{{ product.url | within: collection }}" title="{{ product.title | escape }}">
+                        <img id="img1" src="{{ product.images[0] | product_img_url: 'large' }}" alt="{{ product.title | escape }}" />
+                    </a>                  
+                </div>
+                <div class="collection-products">
+                  <h2>
+                    <a href="{{ product.url | within: collection }}">
+                        <span class="titles">{{ product.title | truncate: 70 }}</span>
+                        <span class="prices">{{ product.price | money }}</span>
+                    </a>
+                  </h2>
+                </div>
+            </li>
+            {% endfor %}
+
+            {% if paginate.next %}
+                <div id="more" class="product" style="width: 100%; text-align: center;"><p><a href="{{ paginate.next.url }}"></a></p></div>        
+            {% endif %}
+            
+            <div id="product-list-foot"></div>
+        </ul>   
+    </div>
+
+   {% endpaginate %}  
+
+<div class="clear"></div>
+
+</div>
+<script type="text/javascript">
+     function ScrollExecute() {
+       if($(document).height() - 800 < ($(document).scrollTop() + $(window).height())) {
+           scrollNode = $('.product#more').last();    
+           scrollURL = $('.product#more p a').last().attr("href");
+           if(scrollNode.length > 0 && scrollNode.css('display') != 'none') {
+               $.ajax({
+                   type: 'GET',
+                   url: scrollURL,
+                   beforeSend: function() {
+                       scrollNode.clone().empty().insertAfter(scrollNode).append('<img src=\"{{ "loader.gif" | asset_url }}\" />');
+                       scrollNode.hide();
+                   },
+                   success: function(data) {
+                       // remove loading feedback
+                       scrollNode.next().remove();
+                       var filteredData = $(data).find(".product");
+                       filteredData.insertBefore( $("#product-list-foot") );                   
+                   },
+                   dataType: "html"
+               });
+           }
+       }
+     }
+
+     $(document).ready(function () {
+       $(window).scroll(function(){
+           $.doTimeout( 'scroll', 200, ScrollExecute);
+       });
+     });
+</script>

@@ -1,0 +1,38 @@
+<ul class="breadcrumbs">
+  <li><a href="/" class="homepage-link" title="Back to the frontpage">Home</a></li>
+  {% if template contains "product" %}
+    {% if collection %}            
+      {% if collection.handle %}
+         {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+         <li>{{ collection.title | link_to: url }}</li>
+      {% elsif collection.all_products_count > 0 and collection.products.first.type == collection.title %}
+         <li>{{ collection.title | link_to_type }}</li>
+      {% elsif collection.all_products_count > 0 and collection.products.first.vendor == collection.title %}
+         <li>{{ collection.title | link_to_vendor }}</li>
+      {% endif %}
+    {% else %}
+      <li>{{ product.type | link_to_type }}</li>
+    {% endif %}
+     <li class="current"><a href="#">{{ page_title }}</a></li>
+  {% elsif template == "article" %}
+      <li>{{ blog.title | link_to: blog.url }}</li>
+      <li class="current"><a href="#">{{ page_title }}</a></li>
+  {% elsif template == "blog" %}
+		{% if current_tags.size > 0 %}
+      <li>{{ blog.title | link_to: blog.url }}</li>
+      <li class="current"><a href="#">{{ current_tags.first }}</a></li>
+      {% endif %}  
+  {% elsif template contains "collection" %}
+      {% if current_tags.size > 0 %}
+      <li>{{ collection.title | link_to: collection.url }}</li>
+      <li class="current"><a href="#">{{ current_tags.first }}</a></li>
+      {% else %}
+      <li class="current"><a href="#">{{ page_title }}</a></li>
+      {% endif %}
+  {% elsif template == 'customers/order' or template == 'customers/addresses' %}
+     <li><a href="/account">Account</a></li>
+			<li class="current"><a href="#">{{ page_title }}</a></li>  	 
+  {% else %}
+      <li class="current"><a href="#">{{ page_title }}</a></li>
+  {% endif %}
+</ul>

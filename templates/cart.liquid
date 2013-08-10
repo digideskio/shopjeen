@@ -1,0 +1,107 @@
+<div id="page">
+<h2>VIEW MY TOTE</h2>
+{% if cart.item_count == 0 %}
+    <p>Your Bag is currently empty.</p>
+
+
+{% else %}
+<script type="text/javascript">
+  function remove_item(id) {
+      document.getElementById('updates_'+id).value = 0;
+      document.getElementById('cartform').submit();
+  }
+</script>
+<form action="/cart" method="post" id="cartform">
+ 
+ 
+<table class="twelve">
+  <thead>
+    <tr>
+        <th class="nomob">ITEM</th>
+		<th></th>
+		<th style="text-align:center;">QTY</th>
+		<th style="text-align:left;">PRICE</th>
+		<th style="text-align:left;">SUBTOTAL</th>
+		
+    </tr>
+  </thead>
+<div id="checkout-right">
+  <input type="submit" name="checkout" id="checkout" value="" class="button" />
+  </div>
+  <tbody>
+   
+  {% for item in cart.items %}
+
+    <tr>
+      
+        <td class="nomob">
+            <a href="{{ item.product.url }}" title="{{ item.product.title | escape }}">
+              {% assign found = false %}
+              {% for img in item.product.images %}
+                {% if found == false and item.variant.title contains img.alt %}
+                  <img src="{{ img | product_img_url: 'small' }}"  alt="{{ item.alt | escape }}" />
+                  {% assign found = true %}
+                 {% endif %}
+              {% endfor %}
+              {% if found == false %}
+                <img src="{{ item.product.featured_image | product_img_url: 'small' }}"  alt="{{ item.product.featured_image.alt | escape }}" />
+              {% endif %}           
+            </a>
+        </td>
+        <td>
+            <p><a href="{{ item.product.url }}">{{ item.title }}</a></p>
+        </td>
+     
+       
+      <td style="text-align:center; ">
+       <center> 
+       <input type="text" size="0" name="updates[{{ item.id }}]" id="updates_{{ item.variant.id }}" value="{{ item.quantity }}" onfocus="this.select();"/>    
+        </center>
+        <div class="remove">
+          <input type="submit" id="remove" name="update" value="UPDATE" /> 
+        </div>
+      </td>
+         <td>
+            <p>{{ item.price | money }}{% if item.variant.compare_at_price > item.price %}<br /><del>{{ item.variant.compare_at_price | money }}</del>{% endif %}</p>          
+        </td>
+        <td>
+            <p>{{ item.line_price | money }}</p>
+        </td>
+      <td>
+      
+        <div id="x">
+          <a href="#" onclick="remove_item({{ item.variant.id }}); return false;">x</a>
+        </div>
+        </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+  
+
+  <a href="/collections/all"><input type="button" name="back" id="back" value="BACK TO SHOPPING" class="button" /></a>
+  
+  <br>
+
+  <div id="check">
+  {{ 'checkout_button.png' | asset_url | img_tag }}
+  </div>
+ 
+  
+  
+	<div id="basket-right">
+		<h3>Subtotal {{ cart.total_price | money }}</h3>
+       
+
+        <input type="submit" name="checkout" id="checkout" value="" class="button" />
+<br><center>OR</center><br>
+        <div class="clear"></div>
+   
+        {{ content_for_additional_checkout_buttons }}
+	</div>  
+</form>
+
+{% endif %}
+
+</div>
+

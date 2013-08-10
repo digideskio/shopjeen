@@ -1,0 +1,20 @@
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#twitter").getTwitter({
+			userName: "{{ settings.twittername }}",
+			numTweets: {{ settings.tweets }},
+			loaderText: "Loading tweets...",
+			slideIn: true,
+			slideDuration: 750,
+			showHeading: true,
+			headingText: "Recent Tweets",
+			showProfileLink: true,
+			showTimestamp: true,
+			includeRetweets: false,
+			excludeReplies: true
+		});
+	});
+</script>
+
+<h4><i class="icon-twitter"></i> Recent Tweets</h4>
+<div id="twitter"></div>

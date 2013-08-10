@@ -1,0 +1,75 @@
+{% if template contains 'product' %}
+     <script type="text/javascript">
+       AddShoppersTracking = { 
+         coupons: {
+           twitter: {
+            text: 'OMG!!!!! Check out this {{ product.title | escape }} I found on Shop Jeen.com!!! What do you think?!?!'
+           },
+           pinterest: {
+             text: '{{ product.title | escape }}'
+           }
+         }
+       }
+     </script>
+{% elsif template contains 'collection' %}
+     <script type="text/javascript">
+       AddShoppersTracking = { 
+         coupons: {
+           twitter: {
+            text: 'OMG!!! Shop Jeen has the coolest {{ collection.title | escape }} products!!! What do you think?!?!'
+           }
+         }
+       }
+     </script>
+{% else %}
+     <style type="text/css">
+       .share-buttons .product-details .product-name {
+  			display: none !important;
+		}
+       .share-buttons #widget-header-logo {
+        	top: 7px;
+			left: 50%;
+			width: 260px;
+			height: 50px; 
+         	margin-left: -130px;
+       }
+       .share-buttons .share-buttons-product {
+         height: 60px !important; 
+         overflow: hidden !important;
+       }
+       .share-buttons .share-buttons-product .product-image {
+         display: none !important; 
+       }
+       .share-buttons .share-buttons-product {
+         background: url('http://cdn.shopify.com/s/files/1/0247/1049/files/sharing_popup_banner.png?31988'); 
+       }
+       #share-buttons-box {
+        	margin-top: -200px !important; 
+       }
+    </style>
+     <script type="text/javascript">
+       AddShoppersTracking = { 
+         //image: 'http://cdn.shopify.com/s/files/1/0247/1049/t/4/assets/logo.png?31816',
+         coupons: {
+           twitter: {
+            text: 'Guys, look at SHOPJEEN.com! They have the most awesome stuff!'
+           },
+           pinterest: {
+            text: 'Guys, look at SHOPJEEN.com! They have the most awesome stuff!'
+           }
+         }
+       }
+     </script>
+{% endif %}
+
+<!-- AddShoppers Floating Buttons Start -->
+<div class="share-buttons share-buttons-tab" data-buttons="twitter,facebook,google,email,pinterest,tumblr,polyvore,wanelo" data-style="big" data-counter="false" data-hover="false" data-promo-callout="false" data-float="left"></div>
+<!-- AddShoppers Floating Buttons End -->
+
+<!-- AddShoppers Tracking Code Start -->
+<script type="text/javascript">
+    var js = document.createElement('script'); js.type = 'text/javascript'; js.async = true; js.id = 'AddShoppers';
+    js.src = ('https:' == document.location.protocol ? 'https://shop.pe' : 'http://cdn.shop.pe') + '/widget/widget_async.js#51d337eda3876463c353c97b';
+    document.getElementsByTagName("head")[0].appendChild(js);
+</script>
+<!-- AddShoppers Tracking Code End -->

@@ -1,0 +1,63 @@
+<div id="page">
+  <h1>{{blog.title}} {{ current_tags }}</h1>
+{% paginate blog.articles by 30 %}
+
+    <div id="blog-paginate-bar" class="twelve columns">
+        <span class="left">
+        </span>
+        <span class="right">
+            {% if paginate.pages > 1 %}
+                {% if paginate.previous %}  {{ 'prev' | link_to: paginate.previous.url }} | {% endif %} Page {{ paginate.current_page }} of {{ paginate.pages }} {% if paginate.next %} | {{ 'Next' | link_to: paginate.next.url }}{% endif %}
+            {% endif %}
+            <h3><a href="{{ shop.url }}/blogs/{{ settings.homepage-blog }}.atom"><i class="icon-rss icon-3x"></i></a></h3>
+        </span>
+    </div>
+    
+    <div class="clear"></div>
+
+    <ul id="blog-articles">
+        <div id="mason">
+            {% for article in blog.articles  %}
+                <li class="art">
+                    <h2><a href="{{ article.url }}">{{ article.title }}</a></h2>
+                    <p><i class="icon-calendar"></i> {{ article.published_at | date: "%A %b %d %Y" }}</p>                  
+                  {% if article.excerpt != blank %}
+                        <div id="excerpt">
+                            <a href="{{ article.url }}">                           
+                            {{ article.excerpt }}                            
+                            </a>
+                        </div>
+                   {% endif %}
+                    <div class="article-headline">
+                    {% if article.excerpt == blank %}    
+                        <p>{{ article.content | truncatewords: 25 | strip_html }}</p>
+                    {% endif %}
+                        {% if blog.comments_enabled? %}
+                        <small><i class=" icon-comments"></i><a href="{{ article.comment_post_url }}"> Comments: {{ article.comments_count }}</a></small>
+                        {% endif %}
+                        <a href="{{ article.url }}">Read Full Article <i class="icon-share"></i></a>
+                        </small>
+                    </div>    
+                </li>
+            {% endfor %}
+        </div>
+    </ul>
+{% endpaginate %}
+</div>
+
+<script type="text/javascript">
+    $(function(){
+    var $container = $('#mason');
+    $container.imagesLoaded(function(){
+    $container.masonry({
+      itemSelector: '.art',
+      isAnimated: true,
+      animationOptions: {
+        duration: 350,
+        easing: 'linear',
+        queue: false
+      }
+    });
+    });
+    }); 
+</script>

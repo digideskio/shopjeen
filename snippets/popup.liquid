@@ -1,0 +1,77 @@
+<script type="text/javascript">
+  
+$(document).ready(function(e) { 
+   $("#popx").click(function () {
+      $("#popup").hide();
+     $("#popup_back").hide();
+   });
+});
+</script>
+
+<script type="text/javascript">
+ $(document).ready(function() {
+	$('#popup').delay(0).fadeIn(400);
+   $('#popup_back').delay(0).fadeIn(400);
+   
+   });
+  
+</script>
+
+<style type="text/css">
+        #popup_back {
+    height:1700px;
+    		display:none;
+    		position: absolute;
+            top: 0px;
+            left: 0px;
+            bottom: 0px;
+            right: 0px;
+            background-color: rgb(0,0,0);
+            opacity: 0.75;
+            filter: "opacity(75)";
+    z-index:9996;
+    animation-delay:2s;
+-webkit-animation-delay:2s; /* Safari and Chrome */
+        }
+        #popup {
+    		display:none;
+            position: absolute;
+            width: 420px;
+            height: 400px;
+            top: 15%;
+            left: 50%;
+            margin-left: -225px;
+            padding: 10px;
+            background-color:#fff;
+            border: solid 0px rgb(100,0,0);
+  			z-index:9997;
+    		
+        }
+  
+  #popup img{text-align:center;}
+  #popup form{margin-top:240px; width:400px; position:absolute;}
+  #popuptext{height:40px; width:270px; margin-left:25px; float:left;}
+  #popupbtn{width:90px;float:left; background-image:url('https://cdn.shopify.com/s/files/1/0247/1049/t/4/assets/Screen_Shot_2013-07-25_at_1.29.59_PM.png?36954');}
+  #popx{font-family:helvetica; width:15px; font-weight:800; height:15px; background-color:#ec008c; float:right; text-align:center; color:#fff;}
+  #popx a{color:#fff; text-align:center; font-weight:400;}
+</style>
+
+  
+
+<div id="popup">
+  <div id="popx">
+          <a href="#" onclick="remove_item({{ item.variant.id }}); return false;">x</a>
+        </div>
+ <form action="http://manage.kmail-lists.com/subscriptions/subscribe" method="GET" id="popupform" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+<input type="hidden" name="g" value="bX8NuN" />
+
+<input value="" name="email" class="email" id="popuptext" placeholder="YOUREAWESOME@SHOPJEEN.COM" required="" type="email">
+<input value="" id="popupbtn" class="button" type="submit">
+</form>
+
+ <img src="{{ 'mailing_popup.png' | asset_url }}" width="400px" />
+  </div>
+
+<div id="popup_back">
+        
+    </div>

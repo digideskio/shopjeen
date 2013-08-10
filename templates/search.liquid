@@ -1,0 +1,100 @@
+<div id="search-page">
+  
+<h2>Search</h2>
+
+
+{% if search.performed %}     
+    {% paginate search.results by 50 %}  
+
+    <div id="paginate-bar">
+        <span class="left">
+          Your search for <strong>{{ search.terms }}</strong> returned {{ search.results_count }} results.
+        </span>
+        <span class="right">
+            {% if paginate.pages > 1 %}
+    {% if paginate.previous %}  {{ 'prev' | link_to: paginate.previous.url }} | {% endif %} Page {{ paginate.current_page }} of {{ paginate.pages }} {% if paginate.next %} | {{ 'Next' | link_to: paginate.next.url }}{% endif %}
+            {% endif %}
+        </span>
+    </div>
+
+    <div id="search_results">  
+      {% if search.performed %}
+		{% if search.results == empty %}  
+		  <p>Your search for "{{search.terms | escape}}" DIDN'T RESULT IN ANYTHING! SORRY!</p>              
+		{% else %}
+            <ul id="collectionlist" style="margin-top: 20px;" class="block-grid five-up mobile"> 
+                {% for item in search.results %}      
+                <li> 
+                    <div class="collection-image">              
+                      <a href="{{item.url}}" title="">
+                      <img src="{{ item.featured_image | product_img_url: 'large' }}" class="scale-with-grid">
+                      
+                      </a>
+                      
+                    </div>
+                    
+                    <div class="collection-products">
+                      {{ item.title | link_to: item.url }}<br>
+                     
+                      {{ item.price | money }}
+                    
+               </div>
+            
+                </li>
+              {% endfor %}
+              </ul>           
+		{% endif %}
+	  {% endif %}
+    </div>
+    
+<div id="bottom-paginate-bar" class="twelve columns">
+
+                {% if paginate.pages > 1 %}
+                <ul class="pagination">
+                    {% if paginate.previous %}
+                      <li class="arrow">{{ '&laquo;' | link_to: paginate.previous.url }}</li>
+                    {% endif %}
+                    {% for part in paginate.parts %}
+                      {% if part.is_link %}
+                        <li>{{ part.title | link_to: part.url }}</li>
+                      {% else %}
+                        {% if part.title == '&hellip;' %}
+                        <li>{{ part.title }}</li>
+                        {% else %}
+                        <li class="current">{{ part.title | link_to: part.url }}</li>
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+                    {% if paginate.next %}
+                      <li class="arrow">{{ '&raquo;' | link_to: paginate.next.url }}</li>
+                    {% endif %}
+                {% if collection.products_count > 32 %}
+                    <li><a href="/collections/{{ collection.handle }}?view=all" style="margin-left: 10px">View All</a></li>
+                {% endif %}
+                </ul>
+                {% endif %}  
+                
+        </div>
+	  	{% endpaginate %}
+
+  {% else %}
+  
+    <div id="paginate-bar">
+        <span class="left">
+          <div id="search-bar">
+          <form action="/search" method="get">
+            <input type="hidden" name="type" value="product" />
+            <input type="text" name="q" id="q" class="search-field" placeholder="search..." />
+            <input type="image" src="{{ 'btn-search.png' | asset_url }}" class="search-button" name="search-button" id="seek" />
+          </form> 
+          </div>  
+        </span>
+        <span class="right">
+        </span>
+    </div>
+
+
+  
+  {% endif %}
+    
+</div>

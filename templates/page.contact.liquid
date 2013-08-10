@@ -1,0 +1,56 @@
+
+
+{% form 'contact' %}
+
+{% if form.posted_successfully? %}
+<div class="successForm feedback">
+  <p>Thanks for contacting us! We'll get back to you as soon as possible.</p>
+</div>
+{% endif %}
+
+{% if form.errors %}
+<div class="errorForm feedback">
+  <!-- {{ form.errors.size }} or {{ form.errors | size }} -->
+  <p>Oops, sorry. We were unable to submit your inquiry because it contained {{ form.errors | size | pluralize: 'an error', 'a few errors' }}. Please correct the following and submit again:</p>
+  {% for field in form.errors %}
+    <p>The {{ field | capitalize | replace: 'Body', 'Message' }} field {{ form.errors.messages[field] }}.</p>
+  {% endfor %}
+</div>
+{% endif %}
+<div class="row"> 
+<div id="contactFormWrapper">
+  <h2>EMAIL CUSTOMER CARE</h2><hr>
+  <p>
+    <label>Your Name:</label><br/>
+    <input type="text" id="contactFormName" name="contact[name]" placeholder="YOUR NAME" />
+  </p>
+  <p>
+    <label>Email:</label><br/>
+    <input type="email" id="contactFormEmail" name="contact[email]" placeholder="YOUREAWESOME@SHOPJEEN.COM" />
+  </p>
+  <p>
+    <label>Order #</label><br/>
+    <input type="text" id="contactFormName" name="contact[order]" placeholder="ORDER #" />
+  </p>
+  <p>
+    <label>Message:</label><br/>
+    <textarea rows="5" cols="75" id="contactFormMessage" name="contact[body]" placeholder="Your Message"></textarea>
+  </p>
+  <p>
+    <input type="submit" id="contactFormSubmit" value="SEND!" />
+  </p>    		
+</div><!-- contactWrapper -->
+  </div>
+
+{% endform %}
+
+<style>
+
+  label{height:10px;}
+  #contactFormWrapper{margin-left:280px; width:320px; max-width:100%; min-width:300px; margin: 0 auto;}
+.contact-form {margin:1em 0}
+.feedback {padding:0.5em 0.7em;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px}
+.feedback p {padding:0.5em 0 !important;margin:0 !important}
+  .successForm {margin-left:230px;background:#fff;color:#000;}
+.errorForm {background:#fff;color:#ec008c;}
+</style>

@@ -1,0 +1,161 @@
+<script type="text/javascript" language="javascript" >
+ 
+
+
+//When the Button is clicked, show Div if hidden and vice-versa
+$('.collection-image img').hover(function () {
+  jQuery(this).addClass('.quick_shop');
+}, function () {
+    jQuery(this).removeClass('.quick_shop');
+});
+</script>
+
+<div id="collectionpage">
+{% paginate collection.products by 32 %}
+
+<div id="collection-left" class="two columns">
+    <h4>{{ settings.collections }}</h4>
+    
+<div id="collections">    
+    <ul id="linklists" class="no-bullet">
+        {% for link in linklists.[settings.collection-list].links %}
+        <li>{{ link.title | link_to: link.url }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% if settings.show-designers %}
+    <h4 class="designer">{{ settings.designers }}</h4>
+    {% if collection.handle == "all" %}
+        <ul id="designer-linklists" class="no-bullet">
+               {% for product_vendor in shop.vendors %}
+               <li>{{ product_vendor | link_to_vendor  }}</li>
+               {% endfor %}
+        </ul> 
+    {% else %}
+        <ul id="linklists" class="no-bullet">
+            {% for product_vendor in collection.all_vendors %}
+                <li class="{{ product_vendor | handelize }}">
+                {{ product_vendor | link_to_vendor }}
+                </li>
+            {% endfor %}
+        </ul> 
+    {% endif %}    
+{% endif %}
+</div>
+
+    <div class="collection-description ten columns">
+        
+            {{ collection.description }}
+
+            
+            <div id="paginate-bar">
+                <span class="left">
+                    <div id="sorting-hat">
+                     {% include 'sort' %}
+                    </div>
+                </span>
+                <span class="right">
+                    {% if paginate.pages > 1 %}
+                    <div id="pagination">
+                        {% if paginate.previous %}  {{ 'prev' | link_to: paginate.previous.url }} / {% endif %} Page {{ paginate.current_page }} of {{ paginate.pages }} {% if paginate.next %} / {{ 'Next' | link_to: paginate.next.url }}{% endif %} {% if collection.products.count >30 %} <a href="/collections/{{ collection.handle }}?view=all"> / View All</a>{% endif %}
+                    </div>
+                    {% endif %}
+                </span>
+            </div>
+    
+        <div class="clear"></div>
+    
+      <ul id="collectionlist" style="margin-top: 20px;" class="block-grid {{ settings.collection-per-row }}-up mobile one-up"> 
+        {% for product in collection.products %}
+            <li> 
+              <div class="quick_shop">
+                QUICK VIEW
+              </div>
+                <div class="collection-image">
+                {% if product.price < product.compare_at_price %}<div class="sale"></div>{% endif %}
+                {% if product.available %}{% else %}<div class="gone">SOLD OUT</div>{% endif %}
+                            {% if product.images.size > 1 %}      
+                            <script type="text/javascript" charset="utf-8">
+                              $(function(){
+                                $('.collection-image').each(function(){
+                                  if($(this).find('img').length > 1) {
+                                    $(this).find('.img2').hide().css('visibility', 'visible');
+                                    $(this).hover(function(){
+                                      $(this).find('.img2').stop(true,true).fadeIn("1000");
+                                      $(this).find('.img1').stop(true,true).fadeOut("1000");
+                                    }, function(){
+                                      $(this).find('.img2').stop(true,true).fadeOut("1000");
+                                      $(this).find('.img1').stop(true,true).fadeIn("1000");
+                                    });
+                                  }
+                                });                              
+                                
+                              }); 
+                            </script>
+                                      <a href="{{ product.url | within: collection }}" title="{{ product.title | escape }}">
+                                      <img class="img1 scale-with-grid" src="{{ product.images[0] | product_img_url: 'grande' }}" alt="{{ product.title | escape }}" />
+                                      <img class="img2 scale-with-grid" src="{{ product.images[1] | product_img_url: 'grande' }}" alt="{{ product.title | escape }}" /> 
+                                      </a>       
+                            {% else %}       
+                                    <a href="{{ product.url | within: collection }}" title="{{ product.title | escape }}">
+                                      <img class="img1 scale-with-grid" src="{{ product.images[0] | product_img_url: 'grande' }}" alt="{{ product.title | escape }}" />
+                                      </a>
+                            {% endif %}   
+                </div>
+              
+                <div class="collection-products">
+                  <h2>
+                    <a href="{{ product.url | within: collection }}">{{ product.title | truncate: 70 }}<br /><span class="money">{{ product.price | money }}</span> {% if product.price < product.compare_at_price %} was <span class="red">{{ product.compare_at_price | money }}</span>{% endif %}</a>
+                  </h2>  
+                </div>
+            </li>
+        {% endfor %}
+        </ul>
+        
+        <div id="bottom-paginate-bar" class="twelve columns">
+
+                {% if paginate.pages > 1 %}
+                <ul class="pagination">
+                    {% if paginate.previous %}
+                      <li class="arrow">{{ '&laquo;' | link_to: paginate.previous.url }}</li>
+                    {% endif %}
+                    {% for part in paginate.parts %}
+                      {% if part.is_link %}
+                        <li>{{ part.title | link_to: part.url }}</li>
+                      {% else %}
+                        {% if part.title == '&hellip;' %}
+                        <li>{{ part.title }}</li>
+                        {% else %}
+                        <li class="current">{{ part.title | link_to: part.url }}</li>
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+                    {% if paginate.next %}
+                      <li class="arrow">{{ '&raquo;' | link_to: paginate.next.url }}</li>
+                    {% endif %}
+                {% if collection.products_count > 32 %}
+                    <li><a href="/collections/{{ collection.handle }}?view=all" style="margin-left: 10px">View All</a></li>
+                {% endif %}
+                </ul>
+                {% endif %}  
+                
+        </div>
+        
+    </div>
+<div class="clear"></div>
+</div>
+{% endpaginate %}
+
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+jQuery(function() {
+  jQuery('#linklists a').each(function() {
+    if (jQuery(this).attr('href')  ===  window.location.pathname) {
+      jQuery(this).addClass('current');
+    }
+  });
+});  
+//]]>
+</script>
+

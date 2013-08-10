@@ -1,0 +1,140 @@
+<div class="row">  
+  <div id="three-banners">
+	<a href="{{ settings.threeleftlink }}"><img src="{{ 'lefthree.gif' | asset_url }}" alt="{{ settings.three1_alt }}" style="border: 0;"  /></a>
+   <a href="{{ settings.threecenterlink }}"><img src="{{ 'centerthree.gif' | asset_url }}" alt="{{ settings.three2_alt }}" style="border: 0;"  /></a>
+   <a href="{{ settings.threerightlink }}"><img src="{{ 'rightthree.gif' | asset_url }}" alt="{{ settings.three3_alt }}" style="border: 0;"/></a>
+  </div>
+</div>
+
+  
+<div id="top">
+  <a href=""><img src="{{ "top.png" | asset_url }}"/></a>
+  </div>
+<div id="collectionpage">
+{% paginate collection.products by 20 %}
+
+
+
+  
+
+
+    <div class="collection-description ten columns">
+            {{ collection.description }}
+
+            
+            <div id="paginate-bar">
+                <span class="left">
+                  
+ 
+<script>
+  jQuery('#reorder-options').change(function() {
+    var old_url = '{{ collection.url }}';
+    var new_url = old_url.replace(/(alpha-asc|alpha-desc|best-selling|created-desc|created-asc|price-desc|price-asc)/, jQuery(this).val());
+    window.location.href = new_url;
+  });
+</script>
+                </span>
+                <span class="right">
+                    {% if collection.products_count > 32 %}
+                        <a href="/collections/{{ collection.handle }}" style="margin-right: 10px"></a>
+                    {% endif %}   
+                </span>
+            </div>
+            
+    
+        <div class="clear"></div>
+    
+        <ul id="collectionlist" style="margin-top: 0px;" class="block-grid {{ settings.collection-per-row }}-up mobile one-up">  
+            {% for product in collection.products %}
+            <li id="product-{{ forloop.index | plus:paginate.current_offset }}" class="product" data-alpha="{{product.title}}" data-price="{{product.price}}">     
+                <div class="collection-image">
+                   {% if product.metafields.onsale.enabled %}
+        <div class="spurit-onsale-main" 
+            style="{{ product.metafields.onsale.style }} background: url({{ product.metafields.onsale.image | asset_url }})">
+            <div class="spurit-onsale-text" style="{{ product.metafields.onsale.styletext }}">
+                {{ product.metafields.onsale.text }}
+            </div>
+        </div>
+  {% endif %}
+                {% if product.price < product.compare_at_price %}<div class="sale"></div>{% endif %}
+                    <a href="{{ product.url | within: collection }}" title="{{ product.title | escape }}">
+                        <img id="img1" src="{{ product.images[0] | product_img_url: 'large' }}" alt="{{ product.title | escape }}" />
+                    </a>                  
+                </div>
+                <div class="collection-products">
+                  <h2>
+                    <a href="{{ product.url | within: collection }}">
+                      <div id="title">   
+                        <span class="titles">{{ product.title | truncate: 70 }}</span></div>
+                        <span class="prices">{{ product.price | money }}</span>
+                    </a>
+                  </h2>
+                </div>
+            </li>
+            {% endfor %}
+
+            {% if paginate.next %}
+                <div id="more" class="product" style="width: 100%; text-align: center;"><p><a href="{{ paginate.next.url }}"></a></p></div>        
+            {% endif %}
+            
+            <div id="product-list-foot"></div>
+        </ul>   
+    </div>
+
+   {% endpaginate %}
+  
+
+
+</div>
+<script type="text/javascript">
+     function ScrollExecute() {
+       if($(document).height() - 800 < ($(document).scrollTop() + $(window).height())) {
+           scrollNode = $('.product#more').last();    
+           scrollURL = $('.product#more p a').last().attr("href");
+           if(scrollNode.length > 0 && scrollNode.css('display') != 'none') {
+               $.ajax({
+                   type: 'GET',
+                   url: scrollURL,
+                   beforeSend: function() {
+                       scrollNode.clone().empty().insertAfter(scrollNode).append('<img src=\"{{ "loader.gif" | asset_url }}\" />');
+                       scrollNode.hide();
+                   },
+                   success: function(data) {
+                       // remove loading feedback
+                       scrollNode.next().remove();
+                       var filteredData = $(data).find(".product");
+                       filteredData.insertBefore( $("#product-list-foot") );                   
+                   },
+                   dataType: "html"
+               });
+           }
+       }
+     }
+
+     $(document).ready(function () {
+       $(window).scroll(function(){
+           $.doTimeout( 'scroll', 200, ScrollExecute);
+       });
+     });
+  
+  
+  
+  jQuery(document).ready(function(){
+		var pxShow = 300;//height on which the button will show
+		var fadeInTime = 1000;//how slow/fast you want the button to show
+		var fadeOutTime = 1000;//how slow/fast you want the button to hide
+		var scrollSpeed = 1000;//how slow/fast you want the button to scroll to top. can be a value, 'slow', 'normal' or 'fast'
+		jQuery(window).scroll(function(){
+			if(jQuery(window).scrollTop() >= pxShow){
+				jQuery("#top").fadeIn(fadeInTime);
+			}else{
+				jQuery("#top").fadeOut(fadeOutTime);
+			}
+		});
+		 
+		jQuery('#top a').click(function(){
+			jQuery('html, body').animate({scrollTop:0}, scrollSpeed); 
+			return false; 
+		}); 
+	});
+</script>
