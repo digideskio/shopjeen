@@ -5,416 +5,410 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
 <!-- SpurIT_OnSale -->
-  {{ 'spurit-onsale.css' | asset_url | stylesheet_tag }}
+	{{ 'spurit-onsale.css' | asset_url | stylesheet_tag }}
 <!-- /SpurIT_OnSale -->
 
-    <!-- Google Web Fonts
-  ================================================== -->
+<!-- Google Web Fonts
+================================================== -->
 
-   <link href='http://fonts.googleapis.com/css?family=Droid+Sans|Arvo|Playfair+Display|Lora|PT+Sans+Narrow|Ubuntu|PT+Serif|Lobster|Rokkitt|Copse|Antic|Dynalight|Droid+Serif|Open+Sans|Raleway:300|Bentham|Playball|Merriweather|Oswald|Questrial|Quicksand|Karla|News+Cycle' rel='stylesheet' type='text/css'>
-   <link href='http://fonts.googleapis.com/css?family=Muli' rel='stylesheet' type='text/css'> 
-    <!-- Basic Page Needs
-  ================================================== -->
-    
-    {% if template == 'index' %}
-     <title>{{ shop.name }} | {{ settings.keywords }}</title>
-    {% elsif template == '404' %}
-      <title>Page Not Found | {{ shop.name }}</title>
-    {% else %}
-     <title>{{ page_title }} | {{ shop.name }}</title>
-    {% endif %}
-    {% assign maxmeta = 155 %}
-    {% if template contains 'product' %}
-     <meta name="description" content="{{ product.description | strip_html | strip_newlines | truncate: maxmeta | escape }}" />
-    {% elsif template contains 'page' %}
-      <meta name="description" content="{{ page.content | strip_html | strip_newlines | truncate: maxmeta | escape }}" />
-    {% elsif template == 'index' and shop.description != '' %}
-      <meta name="description" content="{{ shop.description | strip_html | strip_newlines | truncate: maxmeta | escape}}" />
-    {% endif %}
+ <link href='http://fonts.googleapis.com/css?family=Droid+Sans|Arvo|Playfair+Display|Lora|PT+Sans+Narrow|Ubuntu|PT+Serif|Lobster|Rokkitt|Copse|Antic|Dynalight|Droid+Serif|Open+Sans|Raleway:300|Bentham|Playball|Merriweather|Oswald|Questrial|Quicksand|Karla|News+Cycle' rel='stylesheet' type='text/css'>
+ <link href='http://fonts.googleapis.com/css?family=Muli' rel='stylesheet' type='text/css'>
+<!-- Basic Page Needs
+================================================== -->
 
-    <!-- Mobile Specific Metas
-  ================================================== -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+{% if template == 'index' %}
+ <title>{{ shop.name }} | {{ settings.keywords }}</title>
+{% elsif template == '404' %}
+	<title>Page Not Found | {{ shop.name }}</title>
+{% else %}
+ <title>{{ page_title }} | {{ shop.name }}</title>
+{% endif %}
+{% assign maxmeta = 155 %}
+{% if template contains 'product' %}
+ <meta name="description" content="{{ product.description | strip_html | strip_newlines | truncate: maxmeta | escape }}" />
+{% elsif template contains 'page' %}
+	<meta name="description" content="{{ page.content | strip_html | strip_newlines | truncate: maxmeta | escape }}" />
+{% elsif template == 'index' and shop.description != '' %}
+	<meta name="description" content="{{ shop.description | strip_html | strip_newlines | truncate: maxmeta | escape}}" />
+{% endif %}
 
-  <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->    
+<!-- Mobile Specific Metas
+================================================== -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
 
 
-    <!-- CSS
-  ================================================== -->
-  
-    {{ 'stylesheet.css' | asset_url | stylesheet_tag }}
-    {{ 'foundation.css' | asset_url | stylesheet_tag }}
-    {{ 'layout.css' | asset_url | stylesheet_tag }}
-    {{ 'flexslider.css' | asset_url | stylesheet_tag }}
-    {{ 'colorbox.css' | asset_url | stylesheet_tag }}
-    {{ 'chosen.css' | asset_url | stylesheet_tag }}
-    {{ 'font-awesome.css' | asset_url | stylesheet_tag }}
+<!-- CSS
+================================================== -->
+
+{{ 'stylesheet.css' | asset_url | stylesheet_tag }}
+{{ 'foundation.css' | asset_url | stylesheet_tag }}
+{{ 'layout.css' | asset_url | stylesheet_tag }}
+{{ 'flexslider.css' | asset_url | stylesheet_tag }}
+{{ 'colorbox.css' | asset_url | stylesheet_tag }}
+{{ 'chosen.css' | asset_url | stylesheet_tag }}
+{{ 'font-awesome.css' | asset_url | stylesheet_tag }}
 <style type="text/css">body, a:hover {cursor: url(http://cur.cursors-4u.net/food/foo-2/foo165.cur), progress !important;}</style><a href="http://www.cursors-4u.com/cursor/2006/05/03/foo165.html" target="_blank" title="Pizza"><img src="http://cur.cursors-4u.net/cursor.png" border="0" alt="Pizza" style="position:absolute; top: 0px; right: 0px;" /></a>
-  
-    <!-- JS
-    ================================================= -->
-    
-    {{ 'jquery.js' | asset_url | script_tag }}
-    {{ 'foundation.min.js' | asset_url | script_tag }}
-    {{ 'app.js' | asset_url | script_tag }}
-  
-    {{ 'jquery.foundation.navigation.js' | asset_url | script_tag }}
-    {{ 'jquery.foundation.accordion.js' | asset_url | script_tag }}
-    {{ 'jquery.foundation.alerts.js' | asset_url | script_tag }}    
-    {{ 'jquery.foundation.buttons.js' | asset_url | script_tag }}
-    {{ 'jquery.foundation.forms.js' | asset_url | script_tag }}
-    {{ 'jquery.foundation.mediaQueryToggle.js' | asset_url | script_tag }}
-    {{ 'jquery.foundation.reveal.js' | asset_url | script_tag }}    
-    {{ 'jquery.foundation.tabs.js' | asset_url | script_tag }}
-    {{ 'jquery.foundation.topbar.js' | asset_url | script_tag }}
-    {{ 'jquery.placeholder.js' | asset_url | script_tag }}
-    {{ 'modernizr.foundation.js' | asset_url | script_tag }}       
-    {{ 'option_selection.js' | asset_url | script_tag }}
-    {{ 'jquery.cart.min.js' | asset_url | script_tag }}
-    {{ 'jquery.easing-1.3.pack.js | asset_url | script_tag }}
-    {{ 'chosen.jquery.min.js' | asset_url | script_tag }}  
-    {{ 'jquery.infinitescroll.min.js' | asset_url | script_tag }}
-    {{ 'jquery.ba-dotimeout.js' | asset_url | script_tag }}    
-    {{ 'jquery.masonry.min.js' | asset_url | script_tag }}
-    
-    {% if template == 'index' %}
-    {{ 'jquery.twitter.js' | asset_url | script_tag }}
-    {{ 'jquery.foundation.orbit.js' | asset_url | script_tag }}
-    {% endif %}
-    
-    {% if template == 'product' %}
-    {{ 'jquery.colorbox.js' | asset_url | script_tag }}
-    {{ 'theme.js' | asset_url | script_tag }}  
-    {{ 'jquery.flexslider.js' | asset_url | script_tag }}
-    {% endif %}
-    
-    {{ content_for_header }}
-    
-    {% if template contains 'customers' %}
-    {{ "shopify_common.js" | shopify_asset_url | script_tag }}
-    {{ "customer_area.js"  | shopify_asset_url | script_tag }}
-    {% endif %}
-    
 
-   
-  
-  <!-- Favicons
-	================================================== -->
-  
-  <link rel="shortcut icon" href="{{ 'favicon.png' | asset_url }}">
-  <link href='http://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
-<script type="text/javascript" src="//www.yotpo.com/js/yQuery.js"></script>	
+<!-- JS
+================================================= -->
+
+{{ 'jquery.js' | asset_url | script_tag }}
+{{ 'foundation.min.js' | asset_url | script_tag }}
+{{ 'app.js' | asset_url | script_tag }}
+
+{{ 'jquery.foundation.navigation.js' | asset_url | script_tag }}
+{{ 'jquery.foundation.accordion.js' | asset_url | script_tag }}
+{{ 'jquery.foundation.alerts.js' | asset_url | script_tag }}
+{{ 'jquery.foundation.buttons.js' | asset_url | script_tag }}
+{{ 'jquery.foundation.forms.js' | asset_url | script_tag }}
+{{ 'jquery.foundation.mediaQueryToggle.js' | asset_url | script_tag }}
+{{ 'jquery.foundation.reveal.js' | asset_url | script_tag }}
+{{ 'jquery.foundation.tabs.js' | asset_url | script_tag }}
+{{ 'jquery.foundation.topbar.js' | asset_url | script_tag }}
+{{ 'jquery.placeholder.js' | asset_url | script_tag }}
+{{ 'modernizr.foundation.js' | asset_url | script_tag }}
+{{ 'option_selection.js' | asset_url | script_tag }}
+{{ 'jquery.cart.min.js' | asset_url | script_tag }}
+{{ 'jquery.easing-1.3.pack.js | asset_url | script_tag }}
+{{ 'chosen.jquery.min.js' | asset_url | script_tag }}
+{{ 'jquery.infinitescroll.min.js' | asset_url | script_tag }}
+{{ 'jquery.ba-dotimeout.js' | asset_url | script_tag }}
+{{ 'jquery.masonry.min.js' | asset_url | script_tag }}
+
+{% if template == 'index' %}
+{{ 'jquery.twitter.js' | asset_url | script_tag }}
+{{ 'jquery.foundation.orbit.js' | asset_url | script_tag }}
+{% endif %}
+
+{% if template == 'product' %}
+{{ 'jquery.colorbox.js' | asset_url | script_tag }}
+{{ 'theme.js' | asset_url | script_tag }}
+{{ 'jquery.flexslider.js' | asset_url | script_tag }}
+{% endif %}
+
+{{ content_for_header }}
+
+{% if template contains 'customers' %}
+{{ "shopify_common.js" | shopify_asset_url | script_tag }}
+{{ "customer_area.js"  | shopify_asset_url | script_tag }}
+{% endif %}
+
+<!-- Favicons
+================================================== -->
+
+<link rel="shortcut icon" href="{{ 'favicon.png' | asset_url }}">
+<link href='http://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
+
+<script type="text/javascript" src="//www.yotpo.com/js/yQuery.js"></script>
+
 <!-- Added by Lexity. DO NOT REMOVE/EDIT -->
 <meta name="google-site-verification" content="MfT3T1u_VHbY1QHrfhk7aNQVANybsbfsTA2QIT_5o2s" />
 <script type="text/javascript">
 (function (d, w) {
-  var x = d.getElementsByTagName('SCRIPT')[0], g = d.createElement('SCRIPT'); 
-  g.type = 'text/javascript';
-  g.async = true;
-  g.src = ('https:' == d.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-  x.parentNode.insertBefore(g, x);
+	var x = d.getElementsByTagName('SCRIPT')[0], g = d.createElement('SCRIPT');
+	g.type = 'text/javascript';
+	g.async = true;
+	g.src = ('https:' == d.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	x.parentNode.insertBefore(g, x);
 }(document, window));
 </script>
 <!-- End of addition by Lexity. DO NOT REMOVE/EDIT -->
+
 </head>
 
+{% case template %}
+	{% when 'index' %}
+<body id="page-index">
+	{% else %}
 <body>
-  {% case template %} 
-{% when 'index' %}
-    <body id="page-index">
-{% else %}
-    <body>
 {% endcase %}
-  {% if settings.search-check %}    
-       
-        {% endif %}  
-{% if settings.show_topbar %}
-     
-<div id="banner">
-    <div class="row">
-      
-<ul class="inline-list">
-  <li><a href="/cart" ><img src="{{ 'cart.png' | asset_url }}"/>MY TOTE ({{ cart.item_count }}) <!-- /.details --></a>
- 
-  	<ul>
-      <li>{% include 'cartdrop' %}</li>	
-    
-  		</ul>
-    </li>    
-  <li><a href="/pages/customer-care">CUSTOMER CARE</a></li> 
-  {% if customer  %}
-    <LI><a href="/account">HEY {{ customer.first_name }}!</a> 
-  {% else %}
-      {{ "LOGIN" | customer_login_link }}</LI>
-  {% endif %}
- </ul>
-      
-  <div class="search-wrapper">
-     <form action="/search" method="get">
-        <input type="image" src="{{ 'btn-search.png' | asset_url }}" id="butt"  name="search-button"  />
 
-<input type="text" id="hunt"name="q" value="" />
-     
-  </form>   
-  
-   
-      </div> 
-      
-      </div>
-      
-    </div>
+{% if settings.search-check %}{% endif %}
+
+{% if settings.show_topbar %}
+
+<div id="banner">
+	<div class="row">
+
+		<ul class="inline-list">
+			<li><a href="/cart" ><img src="{{ 'cart.png' | asset_url }}"/>MY TOTE ({{ cart.item_count }}) <!-- /.details --></a>
+
+			<ul>
+				<li>{% include 'cartdrop' %}</li>
+
+				</ul>
+			</li>
+			<li><a href="/pages/customer-care">CUSTOMER CARE</a></li>
+			{% if customer  %}
+			<li><a href="/account">HEY {{ customer.first_name }}!</a>
+			{% else %}
+				{{ "LOGIN" | customer_login_link }}</li>
+			{% endif %}
+		 </ul>
+
+		<div class="search-wrapper">
+			<form action="/search" method="get">
+				<input type="image" src="{{ 'btn-search.png' | asset_url }}" id="butt"  name="search-button"  />
+
+				<input type="text" id="hunt"name="q" value="" />
+			</form>
+		</div>
+	</div>
+</div>
 
 {% endif %}
-      
- 
+
+
 <div class="clear"></div>
 
 <div id="head">
-    <div id="logo" class="row">
-        <h1 class="seven columns" style="border: 0;">
-            {% if settings.use_logo_image %}
-                <a href="/"><img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}"/></a>
-                {% else %}
-                <a href="/">{{ shop.name }}</a>
-            {% endif %}
-        </h1>
+	<div id="logo" class="row">
+		<div class="two columns">
+			<img src="http://placekitten.com/g/150/50.jpg" />
+		</div>
 
-        
-    </div>
-      </div>
+		<h1 class="seven columns" style="border: 0;">
+			{% if settings.use_logo_image %}
+				<a href="/"><img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}"/></a>
+				{% else %}
+				<a href="/">{{ shop.name }}</a>
+			{% endif %}
+		</h1>
+	</div>
+</div>
 
+<div class="navigation">
+		<li class="show-when-fixed">
 
-   
-     
-      <div class="navigation">
-        <li class="show-when-fixed">
-           
-             </li>
-        
-        <ul class="nav-bar">
-          
-          {% if settings.home-link %}<li><a href="/collections/new"><img src="{{ 'new_flashing.gif' | asset_url }}"/></a></li>{% endif %}
-            {% for link in linklists.main-menu.links %}
-                {% capture child_list_handle %}{{ link.title | handleize }}{% endcapture %}
-                    {% if linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 %}
-                        <li class="has-flyout">{{ link.title | link_to: link.url }}
-                        <a href="#" class="flyout-toggle"><span> </span></a>
-                            <ul class="flyout">
-                                {% for l in linklists[child_list_handle].links %}
-                                    <li><a href="{{ l.url }}">{{ l.title }}</a></li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                        {% else %}
-                        <li>{{ link.title | link_to: link.url }}</li>
-                    {% endif %}
-            {% endfor %}
-          
-        </ul><!-- /end nav-bar -->
-        
-    <div class="show-when-fixed">
-    	<ul class="inline-list-fixed">
-  		
-         
-         </ul>
-     
-       </div><!-- /show when fixed -->  
-   </div><!-- /totefix -->
-  
-  
-    
+		</li>
+
+	<ul class="nav-bar">
+		{% if settings.home-link %}<li><a href="/collections/new"><img src="{{ 'new_flashing.gif' | asset_url }}"/></a></li>{% endif %}
+		{% for link in linklists.main-menu.links %}
+			{% capture child_list_handle %}{{ link.title | handleize }}{% endcapture %}
+				{% if linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 %}
+					<li class="has-flyout">{{ link.title | link_to: link.url }}
+					<a href="#" class="flyout-toggle"><span> </span></a>
+						<ul class="flyout">
+							{% for l in linklists[child_list_handle].links %}
+								<li><a href="{{ l.url }}">{{ l.title }}</a></li>
+							{% endfor %}
+						</ul>
+					</li>
+					{% else %}
+					<li>{{ link.title | link_to: link.url }}</li>
+				{% endif %}
+		{% endfor %}
+	</ul><!-- /end nav-bar -->
+
+	<div class="show-when-fixed">
+		<ul class="inline-list-fixed">
+
+		</ul>
+	</div><!-- /show when fixed -->
+</div><!-- /totefix -->
+
 <script type="text/javascript">
-$(".nav-bar").addClass("").before('<div id="menu">☰</div>');  
-$("#menu").click(function(){
-    $(".nav-bar").toggle();
-});
-  
-$(window).resize(function(){ if(window.innerWidth > 768) { $(".nav-bar").removeAttr("style"); } });
-});
+	$(".nav-bar").addClass("").before('<div id="menu">☰</div>');
+	$("#menu").click(function(){
+		$(".nav-bar").toggle();
+	});
+
+	$(window).resize(function(){ if(window.innerWidth > 768) { $(".nav-bar").removeAttr("style"); } });
 </script>
-  
+
 <script type="text/javascript">
 jQuery("document").ready(function($){
-    
-    var nav = $('.navigation');
-  	var ul = $('.nav-bar');
-  	var link = $('.nav-bar > li > a');
-  	var fly = $('.flyout li a');
-  	var flyout=$('.flyout');
-    var first=$('.nav-bar > li:first-child');
-  
-    $(window).scroll(function () {
-        if ($(this).scrollTop() > 136) {	
-          nav.addClass("fixed-navigation");
-          link.css({"font-size":"14px" , "color":"#000" });
-          ul.css({"border":"0px","width":"100%", "margin-top":"-3px"});
-          fly.css({"width":"150px","background-color":"#E5f0fd", "font-size":"12px" , "color":"#000", "box-shadow":"none"});
-          flyout.css({"width":"150px","box-shadow":"none", "border":"none" , "background-color":"#fff"});
-          first.css({"margin-left":"80px" });
-          
-        $(".flyout li a").mouseover(function(){
-  		$(this).css({'color':'#ec008c' , 'background-color':'#E5f0fd' });
-  		});
-  		$(".flyout li a").mouseout(function(){
-     	$(this).css({ "color":"#000" ,'background-color':'#E5f0fd'});
-  		});
-         
-          	
-        } else {
-           
-            nav.removeClass("fixed-navigation");
-          	link.css({"font-size":"17px" });
-         	 ul.css({"border-bottom":"1px solid #ccc" , "width":"900px"});
-          fly.css({"width":"175px","background-color":"#fff", "font-size":"14px" , "color":"#000" });
-          flyout.css({"width":"180px","background-color":"#fff","border":"1px solid #ccc"});
-		first.css({"margin-left":"3px"});
-        
-          $(".flyout li a").mouseover(function(){
-  		$(this).css({'color':'#000' , 'background-color':'#ec008c' });
-  		});
-  		$(".flyout li a").mouseout(function(){
-          $(this).css({ "color":"#000" , 'background-color':'#fff'});
-  		});
-        
-        }
-    
-    
-    });
-  
- 
+
+	var nav = $('.navigation');
+	var ul = $('.nav-bar');
+	var link = $('.nav-bar > li > a');
+	var fly = $('.flyout li a');
+	var flyout=$('.flyout');
+	var first=$('.nav-bar > li:first-child');
+
+	$(window).scroll(function () {
+		if ($(this).scrollTop() > 136) {
+			nav.addClass("fixed-navigation");
+			link.css({"font-size":"14px" , "color":"#000" });
+			ul.css({"border":"0px","width":"100%", "margin-top":"-3px"});
+			fly.css({"width":"150px","background-color":"#E5f0fd", "font-size":"12px" , "color":"#000", "box-shadow":"none"});
+			flyout.css({"width":"150px","box-shadow":"none", "border":"none" , "background-color":"#fff"});
+			first.css({"margin-left":"80px" });
+
+		$(".flyout li a").mouseover(function(){
+		$(this).css({'color':'#ec008c' , 'background-color':'#E5f0fd' });
+		});
+		$(".flyout li a").mouseout(function(){
+		$(this).css({ "color":"#000" ,'background-color':'#E5f0fd'});
+		});
+
+		} else {
+
+			nav.removeClass("fixed-navigation");
+			link.css({"font-size":"17px" });
+			ul.css({"border-bottom":"1px solid #ccc" , "width":"900px"});
+			fly.css({"width":"175px","background-color":"#fff", "font-size":"14px" , "color":"#000" });
+			flyout.css({"width":"180px","background-color":"#fff","border":"1px solid #ccc"});
+			first.css({"margin-left":"3px"});
+
+			$(".flyout li a").mouseover(function(){
+				$(this).css({'color':'#000' , 'background-color':'#ec008c' });
+			});
+
+			$(".flyout li a").mouseout(function(){
+				$(this).css({ "color":"#000" , 'background-color':'#fff'});
+			});
+		}
+
+	});
+
 });
-  </script>
-  
- 
-
-
-    
-
-      
-      <div class="row">
-      
-      </div>
-    
-        {% if template != "index" %}
-            <div id="content" class="row">
-               
-                {% if template == 'list-collections' %}
-                    {% include 'collection-listing' %}
-                {% else %}
-                    {{ content_for_layout }}
-                {% endif %}
-            </div>
-        {% else %}
-            {{ content_for_layout }}
-        {% endif %}
- 
-<div id="footer">
-    <div class="row">
-        <ul id="big-footer">
-            
-            <div class="zero columns">
-                <h4>COMPANY</h4>
-			{% for link in linklists.footer.links limit: 4 %}                
-                   <li>{{ link.title | link_to: link.url }}</li>
-                {% endfor %}</div>
-           
-          <li class="zero columns">
-                <h4>CUSTOMER CARE</h4>
-                <ul class="no-bullet zero columns" style="margin-left:0px; padding-left: 0;">
-              {% for link in linklists.customer-care.links limit: 5 %}                
-                   <li>{{ link.title | link_to: link.url }}</li>
-                {% endfor %}
-                </ul>
-                
-            </li>
-            <li class="fourteen columns">
-                <h4>FIND US ON</h4>
-                {% if settings.show_facebook %}<a href="{{ settings.facebook_url }}"><img src="{{ 'Facebook.png' | asset_url }}"></a>{% endif %}
-                {% if settings.show_twitter %}<a href="http://www.twitter.com/{{ settings.twittername }}"><img src="{{ 'Twitter.png' | asset_url }}"></a>{% endif %}
-                {% if settings.show_pinterest %} <a href="{{ settings.pinterest_url }}"><img src="{{ 'Pinterest.png' | asset_url }}"></a>{% endif %}
-                {% if settings.show_tumblr %} <a href="{{ settings.tumblr_url }}"><img src="{{ 'Tumblr.png' | asset_url }}"></a>{% endif %}
-                {% if settings.show_flickr %} <a href="{{ settings.flickr_url }}"><img src="{{ 'Flickr.png' | asset_url }}"></a>{% endif %}
-                {% if settings.show_youtube %} <a href="{{ settings.youtube_url }}"><img src="{{ 'YouTube.png' | asset_url }}"></a>{% endif %}
-                {% if settings.show_googleplus %} <a href="{{ settings.googleplus_url }}"><img src="{{ 'GooglePlus.png' | asset_url }}"></a>{% endif %}
-                {% if settings.show_vimeo %} <a href="{{ settings.vimeo_url }}"><img src="{{ 'Vimeo.png' | asset_url }}"></a>{% endif %}
-                {% if settings.show_blogger %} <a href="{{ settings.blogger_url }}"><img src="{{ 'Blogger.png' | asset_url }}"></a>{% endif %}
-                {% if settings.show_linkedin %} <a href="{{ settings.linkedin_url }}"><img src="{{ 'LinkedIn.png' | asset_url }}"></a>{% endif %}
-                {% if settings.show_lastfm %} <a href="{{ settings.lastfm_url }}"><img src="{{ 'Last.fm.png' | asset_url }}"></a>{% endif %}
-                {% if settings.show_instagram %} <a href="{{ settings.instagram_url }}"><img src="{{ 'Instagram.png' | asset_url }}"></a>{% endif %}
-            </li>  
-          <li class="thirteen columns">
-          
-             
-              {% include 'mailing' %}
-           
-            </li>
-          
-        
-   
-    <div id="end" class="row">
-          <h4>WE ACCEPT</h4>
-            {% if settings.american_express %}<img src="{{ 'amex.png' | asset_url }}"/>{% endif %}
-            {% if settings.dankort %}<img src="{{ 'dankort.png' | asset_url }}"/>{% endif %}
-            {% if settings.diners %}<img src="{{ 'diners.png' | asset_url }}"/>{% endif %}
-            {% if settings.discover %}<img src="{{ 'discover.png' | asset_url }}"/>{% endif %}
-            {% if settings.forbru %}<img src="{{ 'forbru.png' | asset_url }}"/>{% endif %}
-            {% if settings.google %}<img src="{{ 'google.png' | asset_url }}">{% endif %}
-            {% if settings.jcb %}<img src="{{ 'jcb.png' | asset_url }}">{% endif %}
-            {% if settings.maestro %}<img src="{{ 'maestro.png' | asset_url }}"/>{% endif %}
-            {% if settings.mastercard %}<img src="{{ 'mastercard.png' | asset_url }}"/>{% endif %}
-            {% if settings.paypal %}<img src="{{ 'paypa.png' | asset_url }}"/>{% endif %}  
-            {% if settings.solo %}<img src="{{ 'solo.png' | asset_url }}"/>{% endif %}  
-            {% if settings.visa %}<img src="{{ 'visa.png' | asset_url }}"/>{% endif %}
-        </div>
-     </ul>  
-       </div>
-  <center><p style="font-size:10px;">© 2013 Shop Jeen. All Rights Reserved <a href="/pages/privacy-policy">| Privacy Policy</a><a href="pages/terms-conditions">| Terms & Conditions</a></p></center>
-</div> 
-      <script type="text/javascript" charset="utf-8">var ju_num="47F682D7-18FA-4C6F-9C9B-DB9E2956B8E3";var asset_host=(("https:"==document.location.protocol)?"https":"http")+'://d2j3qa5nc37287.cloudfront.net/';(function() {var s=document.createElement('script');s.type='text/javascript';s.async=true;s.src=asset_host+'coupon_code1.js';var x=document.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);})();</script> 
-
-  {% include 'addshoppers' %}
-  
-  {% comment %} Beetailer Facebook store and social widget plugins code below {% endcomment %}
-  {% include 'beetailer' %}
-<script>
-jQuery('a[href^="http"]').not('a[href^="{{ shop.url }}"]').attr('target', '_blank');
 </script>
-<!-- Google Code for Remarketing Tag -->
-<!--------------------------------------------------
-Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. See more information and instructions on how to setup the tag on: http://google.com/ads/remarketingsetup
---------------------------------------------------->
-<script type="text/javascript">
-/* <![CDATA[ */
-var google_conversion_id = 983534742;
-var google_custom_params = window.google_tag_params;
-var google_remarketing_only = true;
-/* ]]> */
-</script>
-<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
-</script>
-<noscript>
-<div style="display:inline;">
-<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/983534742/?value=0&amp;guid=ON&amp;script=0"/>
+
+
+<div class="row">
+
 </div>
+
+
+{% if template != "index" %}
+
+<div id="content" class="row">
+
+	{% if template == 'list-collections' %}
+		{% include 'collection-listing' %}
+	{% else %}
+		{{ content_for_layout }}
+	{% endif %}
+
+</div>
+
+{% else %}
+
+	{{ content_for_layout }}
+
+{% endif %}
+
+
+<div id="footer">
+	<div class="row">
+		<ul id="big-footer">
+
+			<div class="zero columns">
+				<h4>COMPANY</h4>
+				{% for link in linklists.footer.links limit: 4 %}
+					 <li>{{ link.title | link_to: link.url }}</li>
+				{% endfor %}
+			</div>
+
+			<li class="zero columns">
+				<h4>CUSTOMER CARE</h4>
+				<ul class="no-bullet zero columns" style="margin-left:0px; padding-left: 0;">
+				{% for link in linklists.customer-care.links limit: 5 %}
+					 <li>{{ link.title | link_to: link.url }}</li>
+				{% endfor %}
+				</ul>
+			</li>
+
+			<li class="fourteen columns">
+				<h4>FIND US ON</h4>
+				{% if settings.show_facebook %}<a href="{{ settings.facebook_url }}"><img src="{{ 'Facebook.png' | asset_url }}"></a>{% endif %}
+				{% if settings.show_twitter %}<a href="http://www.twitter.com/{{ settings.twittername }}"><img src="{{ 'Twitter.png' | asset_url }}"></a>{% endif %}
+				{% if settings.show_pinterest %} <a href="{{ settings.pinterest_url }}"><img src="{{ 'Pinterest.png' | asset_url }}"></a>{% endif %}
+				{% if settings.show_tumblr %} <a href="{{ settings.tumblr_url }}"><img src="{{ 'Tumblr.png' | asset_url }}"></a>{% endif %}
+				{% if settings.show_flickr %} <a href="{{ settings.flickr_url }}"><img src="{{ 'Flickr.png' | asset_url }}"></a>{% endif %}
+				{% if settings.show_youtube %} <a href="{{ settings.youtube_url }}"><img src="{{ 'YouTube.png' | asset_url }}"></a>{% endif %}
+				{% if settings.show_googleplus %} <a href="{{ settings.googleplus_url }}"><img src="{{ 'GooglePlus.png' | asset_url }}"></a>{% endif %}
+				{% if settings.show_vimeo %} <a href="{{ settings.vimeo_url }}"><img src="{{ 'Vimeo.png' | asset_url }}"></a>{% endif %}
+				{% if settings.show_blogger %} <a href="{{ settings.blogger_url }}"><img src="{{ 'Blogger.png' | asset_url }}"></a>{% endif %}
+				{% if settings.show_linkedin %} <a href="{{ settings.linkedin_url }}"><img src="{{ 'LinkedIn.png' | asset_url }}"></a>{% endif %}
+				{% if settings.show_lastfm %} <a href="{{ settings.lastfm_url }}"><img src="{{ 'Last.fm.png' | asset_url }}"></a>{% endif %}
+				{% if settings.show_instagram %} <a href="{{ settings.instagram_url }}"><img src="{{ 'Instagram.png' | asset_url }}"></a>{% endif %}
+			</li>
+
+			<li class="thirteen columns">
+				{% include 'mailing' %}
+			</li>
+
+			<div id="end" class="row">
+					<h4>WE ACCEPT</h4>
+					{% if settings.american_express %}<img src="{{ 'amex.png' | asset_url }}"/>{% endif %}
+					{% if settings.dankort %}<img src="{{ 'dankort.png' | asset_url }}"/>{% endif %}
+					{% if settings.diners %}<img src="{{ 'diners.png' | asset_url }}"/>{% endif %}
+					{% if settings.discover %}<img src="{{ 'discover.png' | asset_url }}"/>{% endif %}
+					{% if settings.forbru %}<img src="{{ 'forbru.png' | asset_url }}"/>{% endif %}
+					{% if settings.google %}<img src="{{ 'google.png' | asset_url }}">{% endif %}
+					{% if settings.jcb %}<img src="{{ 'jcb.png' | asset_url }}">{% endif %}
+					{% if settings.maestro %}<img src="{{ 'maestro.png' | asset_url }}"/>{% endif %}
+					{% if settings.mastercard %}<img src="{{ 'mastercard.png' | asset_url }}"/>{% endif %}
+					{% if settings.paypal %}<img src="{{ 'paypa.png' | asset_url }}"/>{% endif %}
+					{% if settings.solo %}<img src="{{ 'solo.png' | asset_url }}"/>{% endif %}
+					{% if settings.visa %}<img src="{{ 'visa.png' | asset_url }}"/>{% endif %}
+			</div>
+	 	</ul>
+
+	</div>
+
+	<center>
+		<p style="font-size:10px;">© 2013 Shop Jeen. All Rights Reserved <a href="/pages/privacy-policy">| Privacy Policy</a><a href="pages/terms-conditions">| Terms & Conditions</a></p>
+	</center>
+
+</div>
+
+<script type="text/javascript" charset="utf-8">var ju_num="47F682D7-18FA-4C6F-9C9B-DB9E2956B8E3";var asset_host=(("https:"==document.location.protocol)?"https":"http")+'://d2j3qa5nc37287.cloudfront.net/';(function() {var s=document.createElement('script');s.type='text/javascript';s.async=true;s.src=asset_host+'coupon_code1.js';var x=document.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);})()</script>
+
+	{% include 'addshoppers' %}
+	{% comment %} Beetailer Facebook store and social widget plugins code below {% endcomment %}
+	{% include 'beetailer' %}
+
+<script>jQuery('a[href^="http"]').not('a[href^="{{ shop.url }}"]').attr('target', '_blank');</script>
+
+<!--
+Google Code for Remarketing Tag
+
+Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. See more information and instructions on how to setup the tag on: http://google.com/ads/remarketingsetup
+-->
+
+<script type="text/javascript">
+	/* <![CDATA[ */
+	var google_conversion_id = 983534742;
+	var google_custom_params = window.google_tag_params;
+	var google_remarketing_only = true;
+	/* ]]> */
+</script>
+
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js"></script>
+
+<noscript>
+
+	<div style="display:inline;">
+		<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/983534742/?value=0&amp;guid=ON&amp;script=0"/>
+	</div>
+
 </noscript>
+
 <script type="text/javascript">
 adroll_adv_id = "P7F6CN6KBJBXNFTK6BXKXS";
 adroll_pix_id = "US6T3F2KH5GQJFK46CAAZK";
 (function () {
 var oldonload = window.onload;
 window.onload = function(){
-   __adroll_loaded=true;
-   var scr = document.createElement("script");
-   var host = (("https:" == document.location.protocol) ? "https://s.adroll.com" : "http://a.adroll.com");
-   scr.setAttribute('async', 'true');
-   scr.type = "text/javascript";
-   scr.src = host + "/j/roundtrip.js";
-   ((document.getElementsByTagName('head') || [null])[0] ||
-    document.getElementsByTagName('script')[0].parentNode).appendChild(scr);
-   if(oldonload){oldonload()}};
+	 __adroll_loaded=true;
+	 var scr = document.createElement("script");
+	 var host = (("https:" == document.location.protocol) ? "https://s.adroll.com" : "http://a.adroll.com");
+	 scr.setAttribute('async', 'true');
+	 scr.type = "text/javascript";
+	 scr.src = host + "/j/roundtrip.js";
+	 ((document.getElementsByTagName('head') || [null])[0] ||
+	document.getElementsByTagName('script')[0].parentNode).appendChild(scr);
+	 if(oldonload){oldonload()}};
 }());
 </script>
-      </body>
+
+</body>
 </html>
