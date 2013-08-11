@@ -167,9 +167,8 @@
 
 <div id="head">
 	<div id="logo" class="row">
-		<div class="two columns">
-			<img src="http://placekitten.com/g/150/50.jpg" />
-		</div>
+
+		<div class="three bubble1 columns"></div>
 
 		<h1 class="seven columns" style="border: 0;">
 			{% if settings.use_logo_image %}
@@ -178,13 +177,15 @@
 				<a href="/">{{ shop.name }}</a>
 			{% endif %}
 		</h1>
+
+		<div class="three bubble2 columns"></div>
 	</div>
 </div>
 
 <div class="navigation">
-		<li class="show-when-fixed">
+	<li class="show-when-fixed">
 
-		</li>
+	</li>
 
 	<ul class="nav-bar">
 		{% if settings.home-link %}<li><a href="/collections/new"><img src="{{ 'new_flashing.gif' | asset_url }}"/></a></li>{% endif %}

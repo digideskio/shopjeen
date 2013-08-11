@@ -6,6 +6,13 @@
 
 /* #Base Styles
 ================================================== */
+
+#popup, #popup_back {
+	display: none; /* for development only */
+}
+
+
+
 * {
 	vertical-align: baseline;
 	font-weight: inherit;
@@ -109,10 +116,16 @@ p a, p a:visited { line-height: inherit; }
 #map_canvas object { max-width: none; }
 
 /* Start the Content ---------------------- */
-#logo{margin-top:-5px; }
-#logo h1 { padding-left: 0; }
-#logo img{position:relative; margin-left:280px;  margin-top:0px; z-index:1;}
-#banner {z-index:101; width:100%; border-bottom:1px solid #ccc; margin:0; font-size: {{ settings.font-size }}; height: 40px; background:#E5f0fd; line-height: 38px; }
+#logo { margin-top:-5px; }
+#logo h1 { margin: 0 auto; }
+#logo img { position:relative; z-index:1; }
+
+.bubble1 {
+	height: 54px;
+	background: url(https://cdn.shopify.com/s/files/1/0247/1049/t/24/assets/bubbles-sprite.png?49380) no-repeat;
+}
+
+#banner { z-index:101; width:100%; border-bottom:1px solid #ccc; margin:0; font-size: {{ settings.font-size }}; height: 40px; background:#E5f0fd; line-height: 38px; }
 #banner a  { text-transform: {{ settings.top-bar-transform }}; line-height: 40px; color: {{ settings.top-bar-links }}; }
 #banner ul { margin-bottom: 0; }
 #wrapper {  }
@@ -314,7 +327,7 @@ ul#index-blog-articles li a { color: {{ settings.homepage-blog-color }}; }
 
 .collection-description { margin-top:0px; margin-bottom: 20px; margin-left:50px; }
 .collection-description h1 {  margin-bottom: 20px; }
-.collection-description img {  }
+.collection-description img { }
 
 ul#linklists { margin-bottom: 30px; }
 ul#linklists a.current { text-decoration: underline; }
@@ -552,50 +565,49 @@ form .search-button {
 #login { margin-left:190px; }
 #customer-wrapper tfoot .label { color: #000; line-height: 36px; }
 #return_to_store { margin-bottom: 20px; }
-#customer_sidebar {
-	margin-bottom: 20px;
-}
+#customer_sidebar {	margin-bottom: 20px; }
 #customer_orders {
-margin-top: 0px;
-  background-color:#E5f0fd;
-  padding:10px;
+	margin-top: 0px;
+	background-color:#E5f0fd;
+	padding:10px;
 }
 
-.action_return note{margin-top:-50px;}
+.action_return note{ margin-top:-50px; }
 .name {
-text-transform: uppercase;
+	text-transform: uppercase;
 }
 .order_section_title {
-margin: 10px 0;
+	margin: 10px 0;
 }
 #order_details {
-margin-top: 20px;
-background-color:#E5f0fd;
-  padding:10px;
+	margin-top: 20px;
+	background-color:#E5f0fd;
+	padding:10px;
 }
 #return_to_account {
-margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 #address_tables {
-margin-top: 20px;
+	margin-top: 20px;
 }
 .address_table { margin-bottom: 40px; height: 200px; }
 #add_address {
-margin-top: 20px;
+	margin-top: 20px;
 }
 
 #customer_detail{background-color:#E5f0fd; width:400px;padding:10px; margin-left:-12px;}
 #customer_detail p {margin-bottom: 0; }
 #view_address { margin-top: 20px; clear: both }
 .customer_address_table {
-padding: 0 10px;
+	padding: 0 10px;
 }
+
 .view_address p { margin-bottom: 0; }
 
 #order_payment, #order_shipping { float: left; min-width: 300px; }
 
 .account.money {
-  font-size: {{ settings.font-size }};
+	font-size: {{ settings.font-size }};
 }
 
 
@@ -615,11 +627,11 @@ ul.list h4 { display: inline-block; font-family: 'Muli', sans-serif;}
 ul.list li { display: inline-block; }
 #footer-form{ position:absolute; }
 #footer-form form{height:40px; width: 200px; margin-top:0px; }
-#signup{margin-top:-20px;}
-#check{margin-top:20px; margin-left:600px; position:absolute;}
-.news.button{border:0px; border-top:0px;width:50px; font-style:bold; height:20px; background-color:transparent; color:#dd9ef7; font-size:10px;}
-.news.button:hover{background-color:transparent;color:#dd9ef7; }
-ul#big-footer {margin-left:20px;width:100%; font-family: 'Muli', sans-serif;bottom:0; float: left; border-top: 1px solid {{ settings.footer-top-border }}; margin-bottom: 0px; border-bottom: 0px solid {{ settings.footer-bottom-border }}; padding: 30px 0 10px; list-style-type: none; }
+#signup { margin-top:-20px; }
+#check { margin-top:20px; margin-left:600px; position:absolute; }
+.news.button { border:0px; border-top:0px;width:50px; font-style:bold; height:20px; background-color:transparent; color:#dd9ef7; font-size:10px; }
+.news.button:hover { background-color:transparent;color:#dd9ef7; }
+ul#big-footer  { margin-left:20px;width:100%; font-family: 'Muli', sans-serif;bottom:0; float: left; border-top: 1px solid {{ settings.footer-top-border }}; margin-bottom: 0px; border-bottom: 0px solid {{ settings.footer-bottom-border }}; padding: 30px 0 10px; list-style-type: none; }
 ul#big-footer li { margin-bottom: 5px; font-size:10px;  }
 ul#big-footer li img { width: auto; margin: 0 5px 5px 0; }
 ul#big-footer { list-style-type: none; color: {{ settings.footer-text-color }}; }
@@ -631,10 +643,12 @@ ul#big-footer h4 { font-weight: bold! important; margin-bottom: 10px; color: #ec
 #mc_embed_signup{color:#dd9ef7; }
 #subscribe{margin-top:90px; margin-left:240px; float:left; background-color:transparent; height:auto; border-top:0px; width:60px; color:#dd9ef7;}
 #end{ margin-left:355px;  width:200px; position:absolute; margin-top:90px; }
-#end h4 { font-weight: bold;
-  margin-bottom: 10px;
-  color: #ec008c;
-  font-family: 'Muli',sans-serif;}
+#end h4 {
+	font-weight: bold;
+	margin-bottom: 10px;
+	color: #ec008c;
+	font-family: 'Muli',sans-serif;
+}
 #end img{width:40px;}
 
 #close img { width:40px; margin: 0 10px 10px 0; }
@@ -666,56 +680,56 @@ ul#big-footer h4 { font-weight: bold! important; margin-bottom: 10px; color: #ec
 /* = Custom AddShoppers Buttons = */
 /* =============== */
 
-	.share-buttons .s-32 {
-		background-image: url('http://cdn.shopify.com/s/files/1/0247/1049/files/social-sprite_1.png?36885') !important;
-	}
-	.share-buttons .twitter-32 {
-		background-position: 0 0 !important;
-	}
-	.share-buttons .facebook-32 {
-		background-position: 0 -32px !important;
-	}
-	.share-buttons .google-32 {
-		background-position: 0 -64px !important;
-	}
-	.share-buttons .email-32 {
-		background-position: 0 -96px !important;
-	}
-	.share-buttons .pinterest-32 {
-		background-position: 0 -128px !important;
-	}
-	.share-buttons .tumblr-32 {
-		background-position: 0 -160px !important;
-	}
-	.share-buttons .polyvore-32 {
-		background-position: 0 -192px !important;
-	}
-	.share-buttons .addshoppers-32 {
-		background-position: 0 -224px !important;
-		display: none !important;
-	}
-	.share-buttons .big-T {
-		background-image: url('http://cdn.shopify.com/s/files/1/0247/1049/files/social-sprite.png?36885') !important;
-		background-position: 0 -256px !important;
-	}
-	.share-buttons .big-F {
-		background-image: url('http://cdn.shopify.com/s/files/1/0247/1049/files/social-sprite.png?36885') !important;
-		background-position: 0 -280px !important;
-	}
-	.share-buttons .big-M {
-		background-image: url('http://cdn.shopify.com/s/files/1/0247/1049/files/social-sprite.png?36885') !important;
-		background-position: 0 -304px !important;
-	}
-	.share-buttons .wanelo-32 {
-		background-position: 0 -328px !important;
-	}
-	.share-buttons .share-main-tab {
-		border: none !important;
-		background-color: #E5F0FD !important;
-	}
-	.share-buttons-tab .shares-counter-vertical {
-		background-color: #FFFFFF !important;
-	}
-	.share-buttons .share-cpn, .share-buttons .share-arrow {
-		display: none !important;
-	}
+.share-buttons .s-32 {
+	background-image: url('http://cdn.shopify.com/s/files/1/0247/1049/files/social-sprite_1.png?36885') !important;
+}
+.share-buttons .twitter-32 {
+	background-position: 0 0 !important;
+}
+.share-buttons .facebook-32 {
+	background-position: 0 -32px !important;
+}
+.share-buttons .google-32 {
+	background-position: 0 -64px !important;
+}
+.share-buttons .email-32 {
+	background-position: 0 -96px !important;
+}
+.share-buttons .pinterest-32 {
+	background-position: 0 -128px !important;
+}
+.share-buttons .tumblr-32 {
+	background-position: 0 -160px !important;
+}
+.share-buttons .polyvore-32 {
+	background-position: 0 -192px !important;
+}
+.share-buttons .addshoppers-32 {
+	background-position: 0 -224px !important;
+	display: none !important;
+}
+.share-buttons .big-T {
+	background-image: url('http://cdn.shopify.com/s/files/1/0247/1049/files/social-sprite.png?36885') !important;
+	background-position: 0 -256px !important;
+}
+.share-buttons .big-F {
+	background-image: url('http://cdn.shopify.com/s/files/1/0247/1049/files/social-sprite.png?36885') !important;
+	background-position: 0 -280px !important;
+}
+.share-buttons .big-M {
+	background-image: url('http://cdn.shopify.com/s/files/1/0247/1049/files/social-sprite.png?36885') !important;
+	background-position: 0 -304px !important;
+}
+.share-buttons .wanelo-32 {
+	background-position: 0 -328px !important;
+}
+.share-buttons .share-main-tab {
+	border: none !important;
+	background-color: #E5F0FD !important;
+}
+.share-buttons-tab .shares-counter-vertical {
+	background-color: #FFFFFF !important;
+}
+.share-buttons .share-cpn, .share-buttons .share-arrow {
+	display: none !important;
+}
