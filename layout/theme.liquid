@@ -132,35 +132,39 @@
 {% if settings.show_topbar %}
 
 <div id="banner">
-	<div class="row">
+	<div class="container">
 
 		<ul class="inline-list">
-			<li><a href="/cart" ><img src="{{ 'cart.png' | asset_url }}"/>MY TOTE ({{ cart.item_count }}) <!-- /.details --></a>
-
-			<ul>
-				<li>{% include 'cartdrop' %}</li>
-
+			<li><a href="/cart" class="cart-link" >MY TOTE ({{ cart.item_count }})</a>
+				<ul class="cart-dropdown">
+					<li>{% include 'cartdrop' %}</li>
 				</ul>
 			</li>
+
 			<li><a href="/pages/customer-care">CUSTOMER CARE</a></li>
+
 			{% if customer  %}
-			<li><a href="/account">HEY {{ customer.first_name }}!</a>
+			<li><a href="/account">HEY {{ customer.first_name }}!</a></li>
 			{% else %}
-				{{ "LOGIN" | customer_login_link }}</li>
+			<li>{{ "LOGIN" | customer_login_link }}</li>
 			{% endif %}
+
 		 </ul>
 
 		<div class="search-wrapper">
 			<form action="/search" method="get">
 				<input type="image" src="{{ 'btn-search.png' | asset_url }}" id="butt"  name="search-button"  />
 
-				<input type="text" id="hunt"name="q" value="" />
+				<input type="text" id="hunt" name="q" value="" placeholder="FIND STUFF"/>
 			</form>
 		</div>
+
 	</div>
 </div>
 
 {% endif %}
+
+
 
 
 <div class="clear"></div>
@@ -180,9 +184,6 @@
 </div>
 
 <div class="navigation">
-	<li class="show-when-fixed">
-
-	</li>
 
 	<ul class="nav-bar">
 		{% if settings.home-link %}<li><a href="/collections/new"><img src="{{ 'new_flashing.gif' | asset_url }}"/></a></li>{% endif %}
@@ -201,14 +202,9 @@
 					<li>{{ link.title | link_to: link.url }}</li>
 				{% endif %}
 		{% endfor %}
-	</ul><!-- /end nav-bar -->
+	</ul>
 
-	<div class="show-when-fixed">
-		<ul class="inline-list-fixed">
-
-		</ul>
-	</div><!-- /show when fixed -->
-</div><!-- /totefix -->
+</div>
 
 <script type="text/javascript">
 	$(".nav-bar").addClass("").before('<div id="menu">☰</div>');
@@ -357,6 +353,8 @@ jQuery("document").ready(function($){
 	</center>
 
 </div>
+
+
 
 <script type="text/javascript" charset="utf-8">var ju_num="47F682D7-18FA-4C6F-9C9B-DB9E2956B8E3";var asset_host=(("https:"==document.location.protocol)?"https":"http")+'://d2j3qa5nc37287.cloudfront.net/';(function() {var s=document.createElement('script');s.type='text/javascript';s.async=true;s.src=asset_host+'coupon_code1.js';var x=document.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);})()</script>
 
