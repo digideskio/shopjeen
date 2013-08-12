@@ -166,20 +166,17 @@
 <div class="clear"></div>
 
 <div id="head">
-	<div id="logo" class="row">
+	<div class="bubble bubble1"></div>
 
-		<div class="three bubble1 columns"></div>
+	<h1 id="logo">
+		{% if settings.use_logo_image %}
+			<a href="/"><img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}"/></a>
+			{% else %}
+			<a href="/">{{ shop.name }}</a>
+		{% endif %}
+	</h1>
 
-		<h1 class="seven columns" style="border: 0;">
-			{% if settings.use_logo_image %}
-				<a href="/"><img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}"/></a>
-				{% else %}
-				<a href="/">{{ shop.name }}</a>
-			{% endif %}
-		</h1>
-
-		<div class="three bubble2 columns"></div>
-	</div>
+	<div class="bubble bubble2"></div>
 </div>
 
 <div class="navigation">
